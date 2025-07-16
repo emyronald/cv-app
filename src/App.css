@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+input,
+textarea,
+select {
+  @apply border border-gray-900 rounded p-2  mb-2 bg-zinc-700 mt-2;
+}
+
+input,
+textarea {
+  @apply w-full;
+}
+
+select {
+  @apply inline-block mx-3 text-center;
+}
+
+label {
+  @apply block mb-2 text-gray-300 mt-3;
+}
+
+h2 {
+  @apply text-2xl font-bold mb-4 text-gray-300;
+}
+
+.add-btn,
+.toggle-preview-btn,.clear-btn,
+.download-pdf-btn {
+  @apply mx-auto block mt-5 mb-1;
+}
+
+input[type="checkbox"] {
+  @apply inline-block w-4 h-4 mr-2 align-middle;
+}
+
+body {
+  @apply flex justify-center;
+}
+
+.multi-form {
+  @apply border-b border-gray-600 pb-5;
+}
+
+.preview-container {
+  @apply bg-white !text-black p-4 !max-w-[800px] m-auto lg:p-20;
+}
+
+.preview-container h2 {
+  @apply text-zinc-600
+  border-b-3 border-blue-500 pb-2 mt-10;
+}
+
+.preview-container h1 {
+  @apply text-3xl font-bold mb-2;
+}
+
+.preview-container > div {
+  @apply mb-3;
+}
+
+.preview-mode {
+  @apply w-screen;
+}
+
