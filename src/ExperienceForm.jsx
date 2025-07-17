@@ -44,6 +44,7 @@ export default function ExperienceForm({
           </label>
           <label>
             Start date:
+            <div>
             <select
               name="startMonth"
               value={exp.startMonth}
@@ -56,6 +57,7 @@ export default function ExperienceForm({
                 </option>
               ))}
             </select>
+
             <select
               name="startYear"
               value={exp.startYear}
@@ -68,10 +70,12 @@ export default function ExperienceForm({
                 </option>
               ))}
             </select>
+            </div>
           </label>
           {!exp.isCurrent && (
             <label>
               End date:
+              <div>
               <select
                 name="endMonth"
                 value={exp.endMonth}
@@ -96,6 +100,7 @@ export default function ExperienceForm({
                   </option>
                 ))}
               </select>
+              </div>
             </label>
           )}
           <label>

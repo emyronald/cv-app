@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import PersonalDataForm from "./PersonalDataForm";
 import EducationForm from "./EducationForm";
 import ExperienceForm from "./ExperienceForm";
@@ -26,13 +26,11 @@ export default function ResumeForm() {
 
   const [showPreview, setShowPreview] = useState(false);
 
-  const previewRef = useRef();
+  
 
   function handleDownloadPdf() {
-    const element = previewRef.current;
-    element.classList.add("no-print");
+    
     window.print();
-    element.classList.remove("no-print");
   }
 
   function handlePersonalChange(event) {
@@ -269,7 +267,7 @@ export default function ResumeForm() {
           skills={formData.skills}
         />
       )}
-      <div className={"mt-4"} ref={previewRef}>
+      <div className='mt-4 no-print' >
         <TogglePreviewButton
           showPreview={showPreview}
           onClick={togglePreview}

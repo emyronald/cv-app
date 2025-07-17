@@ -52,6 +52,7 @@ export default function EducationForm({
 
           <label>
             Admission Date:
+            <div>
             <select
               name="admissionMonth"
               value={edu.admissionMonth}
@@ -76,11 +77,14 @@ export default function EducationForm({
                 </option>
               ))}
             </select>
+            </div>
           </label>
+          
 
           {!edu.isCurrent && (
             <label>
               Graduation date:
+              <div>
               <select
                 name="gradMonth"
                 value={edu.gradMonth}
@@ -105,6 +109,7 @@ export default function EducationForm({
                   </option>
                 ))}
               </select>
+              </div>
             </label>
           )}
           <label>
