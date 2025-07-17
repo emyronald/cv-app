@@ -56,7 +56,7 @@ body {
 
 .preview-container h2 {
   @apply text-zinc-600
-  border-b-3 border-blue-500 pb-2 mt-10;
+  border-b-2 border-blue-500 pb-2 mt-10;
 }
 
 .preview-container h1 {
