@@ -3,7 +3,7 @@ export default function Preview({
   education,
   experience,
   skills,
-  languages
+  languages,
 }) {
   return (
     <div className="preview-container">
@@ -23,7 +23,8 @@ export default function Preview({
           {education.map((edu) => (
             <div key={edu.id}>
               <p>
-                Graduate in {edu.degree}({edu.degreeType})
+                {!edu.isCurrent ? "Graduate in" : "Student of"} {edu.degree}(
+                {edu.degreeType})
               </p>
               <p>{edu.institution}</p>
               <p>
@@ -56,9 +57,7 @@ export default function Preview({
           <h2>Skills</h2>
           {skills.map((skill) => (
             <li key={skill.id}>
-             
-                {skill.skill} - {skill.years} years
-             
+              {skill.skill} - {skill.years} years
             </li>
           ))}
         </div>
@@ -68,9 +67,7 @@ export default function Preview({
           <h2>Languages</h2>
           {languages.map((lang) => (
             <li key={lang.id}>
-             
-                {lang.language} - {lang.fluency} 
-              
+              {lang.language} - {lang.fluency}
             </li>
           ))}
         </div>
