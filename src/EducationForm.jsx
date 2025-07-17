@@ -6,18 +6,35 @@ export default function EducationForm({
   handleCheckboxChange,
   months,
   years,
+  degreeOptions,
 }) {
   return (
     <div className="border-b p-4  shadow-md my-2">
       <h2 className="text-2xl mb-3">Education</h2>
       {education.map((edu) => (
         <div key={edu.id} className="multi-form">
+          <label>
+            Degree Type:
+            <select
+              name="degreeType"
+              value={edu.degreeType}
+              onChange={(e) => onChange(edu.id, e)}
+              required
+            >
+              <option value="">Select degree</option>
+              {degreeOptions.map((degree) => (
+                <option key={degree} value={degree}>
+                  {degree}
+                </option>
+              ))}
+            </select>
+          </label>
           <label className="block mb-2 ">
             Degree:
             <input
               type="text"
               name="degree"
-              placeholder='Degree'
+              placeholder="Degree"
               value={edu.degree}
               onChange={(e) => onChange(edu.id, e)}
             />

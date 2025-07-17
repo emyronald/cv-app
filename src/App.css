@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+.no-print {
+  display: none !important;
+}
+
 input,
 textarea,
 select {
@@ -24,7 +28,8 @@ h2 {
 }
 
 .add-btn,
-.toggle-preview-btn,.clear-btn,
+.toggle-preview-btn,
+.clear-btn,
 .download-pdf-btn {
   @apply mx-auto block mt-5 mb-1;
 }
@@ -42,7 +47,7 @@ body {
 }
 
 .preview-container {
-  @apply bg-white !text-black p-4 !max-w-[800px] m-auto lg:p-20;
+  @apply bg-white !text-black p-4 !max-w-[800px] mx-auto lg:p-20 pt-15;
 }
 
 .preview-container h2 {
@@ -62,3 +67,10 @@ body {
   @apply w-screen;
 }
 
+p,
+h1,
+h2 {
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}

@@ -34,6 +34,15 @@ export default function ExperienceForm({
             />
           </label>
           <label>
+            Description:
+            <textarea
+              name="description"
+              placeholder="Job Description"
+              value={exp.description}
+              onChange={(e) => onChange(exp.id, e)}
+            />
+          </label>
+          <label>
             Start date:
             <select
               name="startMonth"

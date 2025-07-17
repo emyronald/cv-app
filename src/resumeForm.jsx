@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import PersonalDataForm from "./PersonalDataForm";
 import EducationForm from "./EducationForm";
 import ExperienceForm from "./ExperienceForm";
 import SkillsForm from "./SkillsForm";
+import LanguagesForm from "./LanguagesForm";
+import { months, years, degreeOptions, fluencyLevels } from "./data";
+import Preview from "./Preview";
 import "./index.css";
 import "./App.css";
 
@@ -18,29 +21,19 @@ export default function ResumeForm() {
     education: [],
     experience: [],
     skills: [],
+    languages: [],
   });
 
   const [showPreview, setShowPreview] = useState(false);
 
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
+  const previewRef = useRef();
 
-  const years = Array.from(
-    { length: 50 },
-    (_, i) => new Date().getFullYear() - i
-  );
+  function handleDownloadPdf() {
+    const element = previewRef.current;
+    element.classList.add("no-print");
+    window.print();
+    element.classList.remove("no-print");
+  }
 
   function handlePersonalChange(event) {
     const { name, value } = event.target;
@@ -158,6 +151,29 @@ export default function ResumeForm() {
     }));
   }
 
+  function handleLanguageChange(id, event) {
+    const { name, value } = event.target;
+    const newLang = formData.languages.map((lang) =>
+      lang.id === id ? { ...lang, [name]: value } : lang
+    );
+    setFormData({ ...formData, languages: newLang });
+  }
+
+  function addLanguage() {
+    setFormData((prev) => ({
+      ...prev,
+      languages: [
+        ...prev.languages,
+        { id: crypto.randomUUID(), language: "", fluency: "" },
+      ],
+    }));
+  }
+
+  function removeLanguage(id) {
+    const newLanguages = formData.languages.filter((lang) => lang.id !== id);
+    setFormData({ ...formData, languages: newLanguages });
+  }
+
   function removeSkill(id) {
     const newSkills = formData.skills.filter((skill) => skill.id !== id);
     setFormData({ ...formData, skills: newSkills });
@@ -167,7 +183,7 @@ export default function ResumeForm() {
     const { name, checked } = event.target;
     const newExperience = formData.experience.map((exp) =>
       exp.id === id
-        ? { ...exp, [name]: checked, endMonth: "", endYear: "" }
+        ? { ...exp, [name]: checked, endMonth: null, endYear: null }
         : exp
     );
     setFormData({ ...formData, experience: newExperience });
@@ -177,7 +193,7 @@ export default function ResumeForm() {
     const { name, checked } = event.target;
     const newEducation = formData.education.map((edu) =>
       edu.id === id
-        ? { ...edu, [name]: checked, gradMonth: "", gradYear: "" }
+        ? { ...edu, [name]: checked, gradMonth: null, gradYear: null }
         : edu
     );
     setFormData({ ...formData, education: newEducation });
@@ -217,6 +233,7 @@ export default function ResumeForm() {
             handleCheckboxChange={handleEduCheckboxChange}
             months={months}
             years={years}
+            degreeOptions={degreeOptions}
           />
           <ExperienceForm
             onChange={handleExperienceChange}
@@ -233,6 +250,13 @@ export default function ResumeForm() {
             add={addSkill}
             remove={removeSkill}
           />
+          <LanguagesForm
+            languages={formData.languages}
+            onChange={handleLanguageChange}
+            add={addLanguage}
+            remove={removeLanguage}
+            fluency={fluencyLevels}
+          />
         </div>
       )}
 
@@ -241,77 +265,18 @@ export default function ResumeForm() {
           personalData={formData.personalData}
           education={formData.education}
           experience={formData.experience}
+          languages={formData.languages}
           skills={formData.skills}
         />
       )}
-      <div className={"mt-4" + showPreview && " flex justify-between"}>
+      <div className={"mt-4"} ref={previewRef}>
         <TogglePreviewButton
           showPreview={showPreview}
           onClick={togglePreview}
         />
         <ClearButton onClick={handleClear} />
-        {showPreview && <DownloadPdfButton />}
+        {showPreview && <DownloadPdfButton onClick={handleDownloadPdf} />}
       </div>
-    </div>
-  );
-}
-
-function Preview({ personalData, education, experience, skills }) {
-  return (
-    <div className="preview-container">
-      <div className="">
-        <h1>{personalData.name}</h1>
-        <p>{personalData.location}</p>
-        <p>{personalData.email}</p>
-        <p>{personalData.phone}</p>
-      </div>
-      <div>
-        <h2>Professional Summary</h2>
-        <p>{personalData.summary}</p>
-      </div>
-      {education.length > 0 && (
-        <div>
-          <h2>Education</h2>
-          {education.map((edu) => (
-            <div key={edu.id}>
-              <p>Graduate in {edu.degree}</p>
-              <p>{edu.institution}</p>
-              <p>
-                {edu.admissionMonth} {edu.admissionYear} -{" "}
-                {edu.isCurrent ? "Present" : edu.gradMonth + " " + edu.gradYear}
-              </p>
-            </div>
-          ))}
-        </div>
-      )}
-      {experience.length > 0 && (
-        <div>
-          <h2 className="text-red-400">Experience</h2>
-          {experience.map((exp) => (
-            <div key={exp.id}>
-              <p>
-                {exp.position} at {exp.company}
-              </p>
-              <p>
-                {exp.startMonth} {exp.startYear} -{" "}
-                {exp.isCurrent ? "Present" : exp.endMonth + " " + exp.endYear}
-              </p>
-            </div>
-          ))}
-        </div>
-      )}
-      {skills.length > 0 && (
-        <div>
-          <h2>Skills</h2>
-          {skills.map((skill) => (
-            <div key={skill.id}>
-              <p>
-                {skill.skill} - {skill.years} years
-              </p>
-            </div>
-          ))}
-        </div>
-      )}
     </div>
   );
 }
@@ -332,9 +297,9 @@ function ClearButton({ onClick }) {
   );
 }
 
-function DownloadPdfButton() {
+function DownloadPdfButton({ onClick }) {
   return (
-    <button className="download-pdf-btn">
+    <button className="download-pdf-btn" onClick={onClick}>
       Download PDF
     </button>
   );

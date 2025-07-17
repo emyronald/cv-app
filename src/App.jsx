@@ -4,9 +4,6 @@ function App() {
   return (
     <>
       <ResumeForm />
-      <footer>
-        <p>Made with ❤️ by Emezie</p>
-      </footer>
     </>
   );
 }
