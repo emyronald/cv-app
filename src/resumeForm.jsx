@@ -26,10 +26,7 @@ export default function ResumeForm() {
 
   const [showPreview, setShowPreview] = useState(false);
 
-  
-
   function handleDownloadPdf() {
-    
     window.print();
   }
 
@@ -209,8 +206,9 @@ export default function ResumeForm() {
       education: [],
       experience: [],
       skills: [],
+      languages: [],
     });
-    setShowPreview(false);
+    setShowPreview(() => false);
   }
 
   return (
@@ -267,12 +265,12 @@ export default function ResumeForm() {
           skills={formData.skills}
         />
       )}
-      <div className='mt-4 no-print' >
+      <div className="mt-4 no-print">
         <TogglePreviewButton
           showPreview={showPreview}
           onClick={togglePreview}
         />
-        <ClearButton onClick={handleClear} />
+        {!showPreview && <ClearButton onClick={handleClear} />}
         {showPreview && <DownloadPdfButton onClick={handleDownloadPdf} />}
       </div>
     </div>
